@@ -12,7 +12,7 @@ public class FilmControllerTest {
     private static FilmController filmController;
 
     @BeforeEach
-    void BeforeEach() {
+    void beforeEach() {
         filmController = new FilmController();
     }
 

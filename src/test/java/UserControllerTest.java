@@ -1,4 +1,4 @@
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.filmorate.controller.UserController;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UserControllerTest {
     private static UserController userController;
 
-    @BeforeAll
-    static void BeforeAll() {
+    @BeforeEach
+    void beforeEach() {
         userController = new UserController();
     }
 
