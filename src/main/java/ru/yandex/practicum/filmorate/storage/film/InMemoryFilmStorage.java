@@ -6,12 +6,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import ru.yandex.practicum.filmorate.controller.FilmController;
+import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 @Component
@@ -22,6 +24,8 @@ public class InMemoryFilmStorage implements FilmStorage {
     public Film addFilm(Film film) {
         if (isValidated(film)) {
             film.setId(getNextId());
+
+            film.setLikes(new HashSet<>());
 
             films.put(film.getId(), film);
 
@@ -54,6 +58,16 @@ public class InMemoryFilmStorage implements FilmStorage {
         log.info("Фильм не найден.");
 
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Фильм с id = " + newFilm.getId() + " не найден.");
+    }
+
+    public Film getFilmById(Integer id) {
+        Film film = films.get(id);
+
+        if (film == null) {
+            throw new NotFoundException("Пользователь с id: " + id + " не найден.");
+        }
+
+        return film;
     }
 
     public Collection<Film> getAllFilms() {

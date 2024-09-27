@@ -3,8 +3,11 @@ import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.filmorate.controller.UserController;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
+import ru.yandex.practicum.filmorate.storage.user.InMemoryUserStorage;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 public class UserServiceTest {
@@ -13,8 +16,9 @@ public class UserServiceTest {
 
     @BeforeEach
     void beforeEach() {
-        userService = new UserService();
-        userController = new UserController();
+        InMemoryUserStorage userStorage = new InMemoryUserStorage();
+        userService = new UserService(userStorage);
+        userController = new UserController(userService);
     }
     
     @Test
@@ -33,7 +37,7 @@ public class UserServiceTest {
         userFriend.setBirthday(LocalDate.of(2001, 2, 11));
         userController.addUser(userFriend);
 
-        userService.addFriend(user, userFriend);
+        userService.addFriend(user.getId(), userFriend.getId());
         
         assertEquals(1, userFriend.getFriends().size());
         assertEquals(1, user.getFriends().size());
@@ -69,12 +73,17 @@ public class UserServiceTest {
         userMutual2.setBirthday(LocalDate.of(2004, 5, 5));
         userController.addUser(userMutual2);
 
-        userController.addFriend(user1, userMutual1);
-        userController.addFriend(user1, userMutual2);
+        userController.addFriend(user1.getId(), userMutual1.getId());
+        userController.addFriend(user1.getId(), userMutual2.getId());
 
-        userController.addFriend(user2, userMutual1);
-        userController.addFriend(user2, userMutual2);
+        userController.addFriend(user2.getId(), userMutual1.getId());
+        userController.addFriend(user2.getId(), userMutual2.getId());
 
-        System.out.println(userController.getMutualFriends(user1, user2));
+        System.out.println(userController.getMutualFriends(user1.getId(), user2.getId()));
+
+        List<User> expectedFriends = List.of(userMutual1, userMutual2);
+        List<User> actualFriends = new ArrayList<>(userController.getMutualFriends(user1.getId(), user2.getId()));
+
+        assertEquals(expectedFriends, actualFriends);
     }
 }

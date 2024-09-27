@@ -4,9 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 import ru.yandex.practicum.filmorate.controller.UserController;
+import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 
@@ -62,6 +62,16 @@ public class InMemoryUserStorage implements UserStorage {
         log.info("Пользователь не найден.");
 
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь с id = " + newUser.getId() + " не найден.");
+    }
+
+    public User getUserById(Integer id) {
+        User user = users.get(id);
+
+        if (user == null) {
+            throw new NotFoundException("Пользователь с id: " + id + " не найден.");
+        }
+
+        return user;
     }
 
     public Collection<User> getAllUsers() {
