@@ -17,7 +17,9 @@ public class UserServiceTest {
     @BeforeEach
     void beforeEach() {
         InMemoryUserStorage userStorage = new InMemoryUserStorage();
+
         userService = new UserService(userStorage);
+
         userController = new UserController(userService);
     }
     
@@ -36,7 +38,6 @@ public class UserServiceTest {
         userFriend.setName("Oleg");
         userFriend.setBirthday(LocalDate.of(2001, 2, 11));
         userController.addUser(userFriend);
-
         userService.addFriend(user.getId(), userFriend.getId());
         
         assertEquals(1, userFriend.getFriends().size());
