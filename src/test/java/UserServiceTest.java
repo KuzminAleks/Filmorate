@@ -22,6 +22,7 @@ public class UserServiceTest {
 
         userController = new UserController(userService);
     }
+
     @Test
     void shouldAddOneFriend() {
         User user = new User();
@@ -39,6 +40,7 @@ public class UserServiceTest {
 
         userController.addUser(userFriend);
         userService.addFriend(user.getId(), userFriend.getId());
+
         assertEquals(1, userFriend.getFriends().size());
         assertEquals(1, user.getFriends().size());
     }
