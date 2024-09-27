@@ -22,7 +22,6 @@ public class UserServiceTest {
 
         userController = new UserController(userService);
     }
-    
     @Test
     void shouldAddOneFriend() {
         User user = new User();
@@ -37,9 +36,9 @@ public class UserServiceTest {
         userFriend.setLogin("Dog");
         userFriend.setName("Oleg");
         userFriend.setBirthday(LocalDate.of(2001, 2, 11));
+
         userController.addUser(userFriend);
         userService.addFriend(user.getId(), userFriend.getId());
-        
         assertEquals(1, userFriend.getFriends().size());
         assertEquals(1, user.getFriends().size());
     }
