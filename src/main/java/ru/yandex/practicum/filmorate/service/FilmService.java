@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
 import ru.yandex.practicum.filmorate.storage.user.UserStorage;
@@ -39,13 +38,13 @@ public class FilmService {
     public Film addLike(Integer filmId, Integer userId) {
         Film film = filmStorage.getFilmById(filmId);
 
+        log.debug("До добавления лайка: {}", film);
+
         userStorage.getUserById(userId);
 
-        if (film == null) {
-            throw new NotFoundException("Фильм с id: " + filmId + " не найден.");
-        }
-
         film.getLikes().add(userId);
+
+        log.debug("После добавления лайка: {}", film);
 
         return film;
     }
@@ -53,13 +52,13 @@ public class FilmService {
     public Film removeLike(Integer filmId, Integer userId) {
         Film film = filmStorage.getFilmById(filmId);
 
+        log.debug("До удаления лайка: {}", film);
+
         userStorage.getUserById(userId);
 
-        if (film == null) {
-            throw new NotFoundException("Фильм с id: " + filmId + " не найден.");
-        }
-
         film.getLikes().remove(userId);
+
+        log.debug("После удаления лайка: {}", film);
 
         return film;
     }
