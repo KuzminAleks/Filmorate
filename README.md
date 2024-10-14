@@ -7,7 +7,6 @@ SELECT u.email,
   u.login,
   u.name,
   u.birthday
-  uf.friend_id AS friends
 FROM User AS u
 LEFT JOIN user_friends AS uf ON u.id = uf.user_id;
 ```
