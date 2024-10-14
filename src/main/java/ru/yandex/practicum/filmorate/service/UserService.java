@@ -93,4 +93,8 @@ public class UserService {
                 .filter(users -> mutualFriends.remove(users.getId()))
                 .collect(Collectors.toList());
     }
+
+    public boolean isFriends(Integer userId, Integer userFriendId) {
+        return userStorage.getUserById(userId).getFriends().contains(userFriendId);
+    }
 }

@@ -51,4 +51,9 @@ public class UserController {
     public Collection<User> getMutualFriends(@PathVariable Integer user1Id, @PathVariable Integer user2Id) {
         return userService.getMutualFriends(user1Id, user2Id);
     }
+
+    @GetMapping("/{userId}/is-friends/{userFriendId}")
+    public boolean isFriends(@PathVariable Integer userId, @PathVariable Integer userFriendId) {
+        return userService.isFriends(userId, userFriendId);
+    }
 }
