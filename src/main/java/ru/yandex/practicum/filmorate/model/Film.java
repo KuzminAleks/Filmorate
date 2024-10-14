@@ -14,5 +14,5 @@ public class Film {
     private Integer duration;
     private Set<Integer> likes;
     private String genre;
-    private String MPA;
+    private String mpa;
 }
