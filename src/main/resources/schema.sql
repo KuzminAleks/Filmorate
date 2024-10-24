@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS "User" (
 CREATE TABLE IF NOT EXISTS user_friends (
 	user_id INTEGER REFERENCES "User" (id),
 	friend_id INTEGER REFERENCES "User" (id),
+	status varchar(15) DEFAULT 'Pending',
 	CHECK (user_id <> friend_id)
 );
 
