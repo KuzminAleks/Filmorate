@@ -33,11 +33,11 @@ public class FilmDbStorage extends BaseDbStorage<Film> {
             "f.name," +
             "f.description," +
             "f.release_date," +
-            "f.duration \n" +
-            "FROM Film AS f\n" +
-            "LEFT JOIN film_likes AS fl ON f.id = fl.film_id\n" +
-            "GROUP BY f.id\n" +
-            "ORDER BY COUNT(fl.user_id) DESC\n" +
+            "f.duration " +
+            "FROM Film AS f " +
+            "LEFT JOIN film_likes AS fl ON f.id = fl.film_id " +
+            "GROUP BY f.id " +
+            "ORDER BY COUNT(fl.user_id) DESC " +
             "LIMIT ?;";
     private static final String ADD_LIKE_FILM = "INSERT INTO film_likes VALUES (?, ?);";
     private static final String REMOVE_LIKE_FILM = "DELETE FROM film_likes WHERE user_id = ? AND film_id = ?;";
