@@ -78,10 +78,182 @@ public class SpringServerFilmDbStorageTests {
 
         List<Film> films = filmStorage.getAllFilms();
 
-        System.out.println(films);
-
         assertThat(films)
                 .extracting(Film::getName)
                 .contains("insertTest");
+    }
+
+    @Test
+    public void testUpdateFilm() {
+        Film film = new Film();
+
+        film.setName("insertTest");
+        film.setDescription("Some desc");
+        film.setReleaseDate(LocalDate.of(1997, 9, 15));
+        film.setDuration(100);
+
+        Genre genre = new Genre();
+
+        genre.setId(1);
+        genre.setName("Комедия");
+
+        Set<Genre> genres = new HashSet<>();
+        genres.add(genre);
+
+        film.setGenres(genres);
+
+        Mpa mpa = new Mpa();
+
+        mpa.setId(2);
+        mpa.setName("PG");
+
+        film.setMpa(mpa);
+
+        filmStorage.addFilm(film);
+
+        film.setName("updateTest");
+
+        filmStorage.updateFilm(film);
+
+        List<Film> films = filmStorage.getAllFilms();
+
+        assertThat(films)
+                .extracting(Film::getName)
+                .contains("updateTest");
+    }
+
+    @Test
+    public void testDeleteFilm() {
+        Film film = new Film();
+
+        film.setName("insertTest");
+        film.setDescription("Some desc");
+        film.setReleaseDate(LocalDate.of(1997, 9, 15));
+        film.setDuration(100);
+
+        Genre genre = new Genre();
+
+        genre.setId(1);
+        genre.setName("Комедия");
+
+        Set<Genre> genres = new HashSet<>();
+        genres.add(genre);
+
+        film.setGenres(genres);
+
+        Mpa mpa = new Mpa();
+
+        mpa.setId(2);
+        mpa.setName("PG");
+
+        film.setMpa(mpa);
+
+        filmStorage.addFilm(film);
+
+        filmStorage.deleteFilm(film.getId());
+
+        List<Film> films = filmStorage.getAllFilms();
+
+        assertThat(films)
+                .extracting(Film::getName)
+                .doesNotContain("updateTest");
+    }
+
+    @Test
+    public void testAddLike() {
+        Film film = new Film();
+
+        film.setName("insertTest");
+        film.setDescription("Some desc");
+        film.setReleaseDate(LocalDate.of(1997, 9, 15));
+        film.setDuration(100);
+
+        Genre genre = new Genre();
+
+        genre.setId(1);
+        genre.setName("Комедия");
+
+        Set<Genre> genres = new HashSet<>();
+        genres.add(genre);
+
+        film.setGenres(genres);
+
+        Mpa mpa = new Mpa();
+
+        mpa.setId(2);
+        mpa.setName("PG");
+
+        film.setMpa(mpa);
+
+        filmStorage.addFilm(film);
+
+        Integer userId = 1;
+
+        filmStorage.addLike(film.getId(), userId);
+
+        List<Film> films = filmStorage.getTopFilms(10);
+
+        assertThat(films)
+                .extracting(Film::getId)
+                .contains(film.getId());
+
+        filmStorage.removeLike(film.getId(), userId);
+    }
+
+    @Test
+    public void testRemoveLike() {
+        Film film = new Film();
+
+        film.setName("Test");
+        film.setDescription("Some desc");
+        film.setReleaseDate(LocalDate.of(1997, 9, 15));
+        film.setDuration(100);
+
+        Genre genre = new Genre();
+
+        genre.setId(1);
+        genre.setName("Комедия");
+
+        Set<Genre> genres = new HashSet<>();
+        genres.add(genre);
+
+        film.setGenres(genres);
+
+        Mpa mpa = new Mpa();
+
+        mpa.setId(2);
+        mpa.setName("PG");
+
+        film.setMpa(mpa);
+
+        filmStorage.addFilm(film);
+
+        Integer userId = 2;
+
+        filmStorage.addLike(film.getId(), userId);
+
+        List<Film> films = filmStorage.getTopFilms(10);
+
+        assertThat(films)
+                .extracting(Film::getId)
+                .contains(film.getId());
+
+        filmStorage.removeLike(film.getId(), userId);
+
+        films = filmStorage.getTopFilms(1);
+
+        assertThat(films)
+                .extracting(Film::getId)
+                .doesNotContain(film.getId());
+    }
+
+    @Test
+    public void testGetTopFilms() {
+        List<Film> films = filmStorage.getTopFilms(10);
+
+        assertThat(films)
+                .hasSize(4)
+                .extracting(Film::getName)
+                .containsExactlyInAnyOrder("Test1", "Test2", "Test3", "Test4");
     }
 }
