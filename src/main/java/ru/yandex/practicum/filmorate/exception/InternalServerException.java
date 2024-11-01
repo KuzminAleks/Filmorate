@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import ru.yandex.practicum.filmorate.controller.FilmController;
 
 public class InternalServerException extends RuntimeException {
-    public InternalServerException (String mes) {
+    public InternalServerException(String mes) {
         super(mes);
 
         Logger log = LoggerFactory.getLogger(FilmController.class);
