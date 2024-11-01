@@ -2,6 +2,10 @@ package ru.yandex.practicum.filmorate.dal.mapper;
 
 import ru.yandex.practicum.filmorate.dal.dto.FilmDto;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.Genre;
+import ru.yandex.practicum.filmorate.model.Mpa;
+
+import java.util.stream.Collectors;
 
 public final class FilmMapper {
     public static FilmDto mapToFilmDto(Film film) {
@@ -12,6 +16,8 @@ public final class FilmMapper {
         dto.setDescription(film.getDescription());
         dto.setReleaseDate(film.getReleaseDate());
         dto.setDuration(film.getDuration());
+        dto.setGenres(film.getGenres());
+        dto.setMpa(film.getMpa());
 
         return dto;
     }

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS MPA (
+CREATE TABLE IF NOT EXISTS mpa (
 	id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	name VARCHAR(40)
 );
@@ -8,10 +8,14 @@ CREATE TABLE IF NOT EXISTS Film (
 	name VARCHAR(255) NOT NULL,
 	description VARCHAR(200),
 	release_date DATE,
-	duration INTEGER,
-	MPA INTEGER REFERENCES MPA (id)
+	duration INTEGER
 );
 
+CREATE TABLE IF NOT EXISTS film_mpa (
+	film_id INTEGER REFERENCES Film (id),
+	mpa_id INTEGER REFERENCES mpa (id),
+	PRIMARY KEY (film_id, mpa_id)
+);
 
 
 CREATE TABLE IF NOT EXISTS genre (
@@ -21,7 +25,8 @@ CREATE TABLE IF NOT EXISTS genre (
 
 CREATE TABLE IF NOT EXISTS film_genre (
 	film_id INTEGER REFERENCES Film (id),
-	genre_id INTEGER REFERENCES genre (id)
+	genre_id INTEGER REFERENCES genre (id),
+	PRIMARY KEY (film_id, genre_id)
 );
 
 
@@ -37,7 +42,7 @@ CREATE TABLE IF NOT EXISTS "User" (
 CREATE TABLE IF NOT EXISTS user_friends (
 	user_id INTEGER REFERENCES "User" (id),
 	friend_id INTEGER REFERENCES "User" (id),
-	status varchar(15) DEFAULT 'Pending',
+	PRIMARY KEY (user_id, friend_id),
 	CHECK (user_id <> friend_id)
 );
 
@@ -45,5 +50,6 @@ CREATE TABLE IF NOT EXISTS user_friends (
 
 CREATE TABLE IF NOT EXISTS film_likes (
 	film_id INTEGER REFERENCES Film (id),
-	user_id INTEGER REFERENCES "User" (id)
+	user_id INTEGER REFERENCES "User" (id),
+	PRIMARY KEY (film_id, user_id)
 );

@@ -10,6 +10,7 @@ import ru.yandex.practicum.filmorate.exception.InternalServerException;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -42,13 +43,19 @@ public class BaseDbStorage<T> {
             return ps;
         }, keyHolder);
 
-        Integer id = keyHolder.getKeyAs(Integer.class);
+        Map<String, Object> keys = keyHolder.getKeys();
 
-        if (id != null) {
-            return id;
+        if (keys != null && !keys.isEmpty() && keys.size() > 1) {
+            return keys.size();
         } else {
-            throw new InternalServerException("Не удалось сохранить данные.");
+            Integer id = keyHolder.getKeyAs(Integer.class);
+
+            if (id != null) {
+                return id;
+            }
         }
+
+        throw new InternalServerException("Не удалось сохранить данные.");
     }
 
     protected void update(String query, Object... params) {
@@ -57,9 +64,7 @@ public class BaseDbStorage<T> {
         }
     }
 
-    protected boolean delete(String query, Integer id) {
-        return jdbc.update(query, id) > 0;
+    protected boolean delete(String query, Object... params) {
+        return jdbc.update(query, params) > 0;
     }
-
-
 }

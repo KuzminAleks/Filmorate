@@ -6,7 +6,6 @@ import ru.yandex.practicum.filmorate.dal.dto.UserDto;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
 
-import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -39,28 +38,28 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-//    @PutMapping("/{userId}/friends/{userFriendId}")
-//    public User addFriend(@PathVariable Integer userId, @PathVariable Integer userFriendId) {
-//        return userService.addFriend(userId, userFriendId);
-//    }
-//
-//    @DeleteMapping("/{userId}/friends/{userFriendId}")
-//    public User deleteFriend(@PathVariable Integer userId, @PathVariable Integer userFriendId) {
-//        return userService.deleteFriend(userId, userFriendId);
-//    }
-//
-//    @GetMapping("/{userId}/friends")
-//    public Collection<User> getUserFriends(@PathVariable Integer userId) {
-//        return userService.getUserFriends(userId);
-//    }
-//
-//    @GetMapping("/{user1Id}/friends/common/{user2Id}")
-//    public Collection<User> getMutualFriends(@PathVariable Integer user1Id, @PathVariable Integer user2Id) {
-//        return userService.getMutualFriends(user1Id, user2Id);
-//    }
-//
-//    @GetMapping("/{userId}/is-friends/{userFriendId}")
-//    public boolean isFriends(@PathVariable Integer userId, @PathVariable Integer userFriendId) {
-//        return userService.isFriends(userId, userFriendId);
-//    }
+    @GetMapping("/{userId}")
+    public UserDto getUserById(@PathVariable Integer userId) {
+        return userService.getUserById(userId);
+    }
+
+    @PutMapping("/{userId}/friends/{friendId}")
+    public UserDto addFriend(@PathVariable Integer userId, @PathVariable Integer friendId) {
+        return userService.addFriend(userId, friendId);
+    }
+
+    @DeleteMapping("/{userId}/friends/{friendId}")
+    public UserDto removeFriend(@PathVariable Integer userId, @PathVariable Integer friendId) {
+        return userService.removeFriend(userId, friendId);
+    }
+
+    @GetMapping("/{userId}/friends")
+    public List<UserDto> getUserFriends(@PathVariable Integer userId) {
+        return userService.getUserFriends(userId);
+    }
+
+    @GetMapping("/{user1Id}/friends/common/{user2Id}")
+    public List<UserDto> getMutualFriends(@PathVariable Integer user1Id, @PathVariable Integer user2Id) {
+        return userService.getMutualFriends(user1Id, user2Id);
+    }
 }

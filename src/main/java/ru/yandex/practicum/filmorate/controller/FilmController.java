@@ -1,25 +1,17 @@
 package ru.yandex.practicum.filmorate.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.dal.dto.FilmDto;
-import ru.yandex.practicum.filmorate.dal.dto.UserDto;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.FilmService;
-import ru.yandex.practicum.filmorate.dal.dao.FilmDbStorage;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/films")
 public class FilmController {
     private final FilmService filmService;
-
-    private final Logger log = LoggerFactory.getLogger(FilmService.class);
 
     @Autowired
     public FilmController(FilmService filmService) {
@@ -36,9 +28,19 @@ public class FilmController {
         return filmService.updateFilm(newFilm);
     }
 
+    @DeleteMapping("/{filmId}")
+    public boolean deleteFilm(@PathVariable Integer filmId) {
+        return filmService.deleteFilm(filmId);
+    }
+
     @GetMapping
     public List<FilmDto> getAllFilms() {
         return filmService.getAllFilms();
+    }
+
+    @GetMapping("/{filmId}")
+    public FilmDto findFilmById(@PathVariable Integer filmId) {
+        return filmService.findFilmById(filmId);
     }
 
     @PutMapping("{filmId}/like/{userId}")
@@ -55,9 +57,4 @@ public class FilmController {
     public List<FilmDto> getTopFilms(@RequestParam(value = "count", defaultValue = "10") Integer count) {
         return filmService.getTopFilms(count);
     }
-
-//    @GetMapping("{filmId}/likes")
-//    public Set<UserDto> getLikesFilm(@PathVariable Integer filmId) {
-//        return filmService.getLikesFilm(filmId);
-//    }
 }

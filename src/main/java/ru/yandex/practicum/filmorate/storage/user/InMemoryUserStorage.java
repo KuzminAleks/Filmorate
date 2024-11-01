@@ -29,7 +29,7 @@ public class InMemoryUserStorage implements UserStorage {
 
             user.setId(getNextId());
 
-            user.setFriends(new HashSet<>());
+            //user.setFriends(new HashSet<>());
 
             users.put(user.getId(), user);
 
