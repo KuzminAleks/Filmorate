@@ -48,4 +48,3 @@ WHERE (SELECT friend_id
                                         FROM user_friends
                                         WHERE user_id = 2) AS friends2
 ```
-
