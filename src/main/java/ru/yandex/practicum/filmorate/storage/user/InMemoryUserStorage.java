@@ -13,7 +13,6 @@ import ru.yandex.practicum.filmorate.model.User;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 @Component
@@ -28,8 +27,6 @@ public class InMemoryUserStorage implements UserStorage {
             }
 
             user.setId(getNextId());
-
-            //user.setFriends(new HashSet<>());
 
             users.put(user.getId(), user);
 

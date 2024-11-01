@@ -13,7 +13,6 @@ import ru.yandex.practicum.filmorate.model.Film;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 @Component
@@ -24,8 +23,6 @@ public class InMemoryFilmStorage implements FilmStorage {
     public Film addFilm(Film film) {
         if (isValidated(film)) {
             film.setId(getNextId());
-
-            //film.setLikes(new HashSet<>());
 
             films.put(film.getId(), film);
 

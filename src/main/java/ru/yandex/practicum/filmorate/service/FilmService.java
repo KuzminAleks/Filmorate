@@ -2,16 +2,13 @@ package ru.yandex.practicum.filmorate.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.dal.dao.FilmDbStorage;
-import ru.yandex.practicum.filmorate.dal.dao.GenreDbStorage;
 import ru.yandex.practicum.filmorate.dal.dto.FilmDto;
 import ru.yandex.practicum.filmorate.dal.mapper.FilmMapper;
 import ru.yandex.practicum.filmorate.exception.InternalServerException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.model.Genre;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -26,11 +23,8 @@ public class FilmService {
 
     private final FilmDbStorage filmDbStorage;
 
-    private final GenreDbStorage genreDbStorage;
-
-    public FilmService (FilmDbStorage filmDbStorage, GenreDbStorage genreDbStorage) {
+    public FilmService(FilmDbStorage filmDbStorage) {
         this.filmDbStorage = filmDbStorage;
-        this.genreDbStorage = genreDbStorage;
     }
 
     public List<FilmDto> getAllFilms() {
@@ -41,8 +35,6 @@ public class FilmService {
 
     public FilmDto findFilmById(Integer filmId) {
         Optional<Film> film = filmDbStorage.findFilmById(filmId);
-
-        //List<Genre> genres = genreDbStorage.
 
         System.out.println(film.map(FilmMapper::mapToFilmDto));
 

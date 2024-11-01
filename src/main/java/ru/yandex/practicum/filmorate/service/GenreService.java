@@ -31,6 +31,9 @@ public class GenreService {
 
     public GenreDto getGenresById(Integer genreId) {
         Optional<Genre> genre = genreDbStorage.getGenreById(genreId);
+
+        log.debug(genre.toString());
+
         return genre.map(GenreMapper::mapToGenreDto).orElseThrow(() -> new NotFoundException("Такого жанра не существует."));
     }
 }

@@ -31,6 +31,8 @@ public class MpaService {
     public MpaDto getMpaById(Integer mpaId) {
         Optional<Mpa> mpa = mpaDbStorage.getMpaById(mpaId);
 
+        log.debug(mpa.toString());
+
         return mpa.map(MpaMapper::mapToMpaDto).orElseThrow(() -> new NotFoundException("Такого MPA не существует."));
     }
 }
