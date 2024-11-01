@@ -13,7 +13,7 @@ public class MpaDbStorage extends BaseDbStorage<Mpa> {
     private static final String FIND_ALL_MPA = "SELECT * FROM mpa;";
     private static final String FIND_MPA_BY_ID = "SELECT * FROM mpa WHERE id = ?;";
 
-    public MpaDbStorage (JdbcTemplate jdbc, RowMapper<Mpa> mapper) {
+    public MpaDbStorage(JdbcTemplate jdbc, RowMapper<Mpa> mapper) {
         super(jdbc, mapper);
     }
 
