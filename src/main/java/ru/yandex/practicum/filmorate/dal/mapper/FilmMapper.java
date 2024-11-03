@@ -1,8 +1,10 @@
 package ru.yandex.practicum.filmorate.dal.mapper;
 
+import lombok.experimental.UtilityClass;
 import ru.yandex.practicum.filmorate.dal.dto.FilmDto;
 import ru.yandex.practicum.filmorate.model.Film;
 
+@UtilityClass
 public final class FilmMapper {
     public static FilmDto mapToFilmDto(Film film) {
         FilmDto dto = new FilmDto();
