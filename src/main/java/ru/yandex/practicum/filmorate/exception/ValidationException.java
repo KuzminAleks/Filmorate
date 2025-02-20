@@ -4,11 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ValidationException extends RuntimeException {
-    private final Logger log = LoggerFactory.getLogger(FilmController.class);
 
     public ValidationException(String mes) {
         super(mes);
 
+        Logger log = LoggerFactory.getLogger(FilmController.class);
         log.warn("Ошибка валидации: {}", mes);
     }
 }
